@@ -1,6 +1,6 @@
-import { Controller, HttpCode, Param, Req } from '@nestjs/common';
+import { Controller, HttpCode, Param, Req,Body } from '@nestjs/common';
 import { Delete, Get, Patch, Post } from '@nestjs/common/decorators/http/request-mapping.decorator';
-
+import { createUserDto } from './userDTO/createUserDto.dto';
 @Controller('user')
 export class UserController {
     @Get()
@@ -9,8 +9,8 @@ export class UserController {
     }
     @Post()
     @HttpCode(201)
-    createUser() {
-        return "the user is created"
+    createUser(@Body() createUserDto:createUserDto) {
+        return `the first user is name: ${createUserDto.name} email:${createUserDto.email} password:${createUserDto.password}`; 
     }
 
     @Get(':id')

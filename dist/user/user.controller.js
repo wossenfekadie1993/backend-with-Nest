@@ -15,12 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const request_mapping_decorator_1 = require("@nestjs/common/decorators/http/request-mapping.decorator");
+const createUserDto_dto_1 = require("./userDTO/createUserDto.dto");
 let UserController = class UserController {
     getUser(request) {
         return 'THIS IS ALL USERS';
     }
-    createUser() {
-        return "the user is created";
+    createUser(createUserDto) {
+        return `the first user is name: ${createUserDto.name} email:${createUserDto.email} password:${createUserDto.password}`;
     }
     getOneUser(id) {
         return {
@@ -49,8 +50,9 @@ __decorate([
 __decorate([
     (0, request_mapping_decorator_1.Post)(),
     (0, common_1.HttpCode)(201),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [createUserDto_dto_1.createUserDto]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "createUser", null);
 __decorate([
