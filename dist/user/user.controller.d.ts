@@ -1,11 +1,9 @@
-import { createUserDto } from './userDTO/createUserDto.dto';
+import { UserDto } from './userDTO/createUserDto.dto';
 export declare class UserController {
-    getUser(request: Request): String;
-    createUser(createUserDto: createUserDto): string;
     getOneUser(id: String): {
         id: String;
     };
-    updateUser(id: String): {
+    updateUser(id: String, createUserDto: UserDto): {
         message: string;
     };
     deleteUser(id: String): {

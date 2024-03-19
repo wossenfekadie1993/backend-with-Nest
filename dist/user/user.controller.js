@@ -17,18 +17,12 @@ const common_1 = require("@nestjs/common");
 const request_mapping_decorator_1 = require("@nestjs/common/decorators/http/request-mapping.decorator");
 const createUserDto_dto_1 = require("./userDTO/createUserDto.dto");
 let UserController = class UserController {
-    getUser(request) {
-        return 'THIS IS ALL USERS';
-    }
-    createUser(createUserDto) {
-        return `the first user is name: ${createUserDto.name} email:${createUserDto.email} password:${createUserDto.password}`;
-    }
     getOneUser(id) {
         return {
             id
         };
     }
-    updateUser(id) {
+    updateUser(id, createUserDto) {
         return {
             'message': `This is the updated user ${id}`
         };
@@ -41,21 +35,6 @@ let UserController = class UserController {
 };
 exports.UserController = UserController;
 __decorate([
-    (0, request_mapping_decorator_1.Get)(),
-    __param(0, (0, common_1.Req)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Request]),
-    __metadata("design:returntype", String)
-], UserController.prototype, "getUser", null);
-__decorate([
-    (0, request_mapping_decorator_1.Post)(),
-    (0, common_1.HttpCode)(201),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [createUserDto_dto_1.createUserDto]),
-    __metadata("design:returntype", void 0)
-], UserController.prototype, "createUser", null);
-__decorate([
     (0, request_mapping_decorator_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -65,8 +44,9 @@ __decorate([
 __decorate([
     (0, request_mapping_decorator_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, createUserDto_dto_1.UserDto]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "updateUser", null);
 __decorate([
