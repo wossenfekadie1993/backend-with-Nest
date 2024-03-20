@@ -29,9 +29,6 @@ export class UserController {
     // }
 
     @Get()
-    findAll(){
-        return []
-    }
 
 
     @Get(':id')

@@ -4,7 +4,7 @@ import { UserDto } from './userDTO/createUserDto.dto';
 import { UserService } from './user.service';
 // import { version } from 'os';
 // import { promises } from 'dns';
-@Controller('user')
+@Controller('/user')
 export class UserController {
     // @Get()
     // redirect url
@@ -29,7 +29,7 @@ export class UserController {
     // }
 
     @Get()
-    findAll(){
+    findall(){
         return []
     }
 

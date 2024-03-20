@@ -29,7 +29,7 @@ export class UserController {
     // }
 
     @Get()
-    findAll(){
+    findall(){
         return []
     }
 

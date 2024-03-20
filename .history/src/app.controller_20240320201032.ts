@@ -6,8 +6,5 @@ export class AppController {
     allUser(){
         return []
     }
-    @Post()
-    create(){
-        return 'created'
-    }
+    @Post
 }

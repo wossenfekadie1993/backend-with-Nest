@@ -7,7 +7,5 @@ export class AppController {
         return []
     }
     @Post()
-    create(){
-        return 'created'
-    }
+    create
 }

@@ -28,10 +28,7 @@ export class UserController {
     //     return `the first user is name: ${createUserDto.name} email:${createUserDto.email} password:${createUserDto.password}`; 
     // }
 
-    @Get()
-    findAll(){
-        return []
-    }
+    
 
 
     @Get(':id')

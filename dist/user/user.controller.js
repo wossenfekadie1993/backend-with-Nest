@@ -17,8 +17,8 @@ const common_1 = require("@nestjs/common");
 const request_mapping_decorator_1 = require("@nestjs/common/decorators/http/request-mapping.decorator");
 const createUserDto_dto_1 = require("./userDTO/createUserDto.dto");
 let UserController = class UserController {
-    createUser(user) {
-        return user;
+    findAll() {
+        return [];
     }
     getOneUser(id) {
         return {
@@ -38,12 +38,11 @@ let UserController = class UserController {
 };
 exports.UserController = UserController;
 __decorate([
-    (0, request_mapping_decorator_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    (0, request_mapping_decorator_1.Get)(),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], UserController.prototype, "createUser", null);
+], UserController.prototype, "findAll", null);
 __decorate([
     (0, request_mapping_decorator_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

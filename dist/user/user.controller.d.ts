@@ -1,6 +1,6 @@
 import { UserDto } from './userDTO/createUserDto.dto';
 export declare class UserController {
-    createUser(user: {}): {};
+    findAll(): any[];
     getOneUser(id: String): {
         id: String;
     };
