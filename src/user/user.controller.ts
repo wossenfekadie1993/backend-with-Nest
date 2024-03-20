@@ -28,6 +28,12 @@ export class UserController {
     //     return `the first user is name: ${createUserDto.name} email:${createUserDto.email} password:${createUserDto.password}`; 
     // }
 
+    @Post()
+    createUser(@Body() user:{} ){
+        return user
+    }
+
+
     @Get(':id')
         getOneUser(@Param('id') id:String){
             return {
