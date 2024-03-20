@@ -32,10 +32,7 @@ export class UserController {
     findAll(){
         return []
     }
-    @Post()
-    createUser(@Body()user:{}){
-        return {user}
-    }
+    
     @Get(':id')
         getOneUser(@Param('id') id:String){
             return {

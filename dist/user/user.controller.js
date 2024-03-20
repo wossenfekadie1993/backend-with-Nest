@@ -20,6 +20,9 @@ let UserController = class UserController {
     findAll() {
         return [];
     }
+    createUser(user) {
+        return { user };
+    }
     getOneUser(id) {
         return {
             id
@@ -43,6 +46,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "findAll", null);
+__decorate([
+    (0, request_mapping_decorator_1.Post)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "createUser", null);
 __decorate([
     (0, request_mapping_decorator_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

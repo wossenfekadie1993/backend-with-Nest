@@ -33,9 +33,6 @@ export class UserController {
         return []
     }
     @Post()
-    createUser(@Body()user:{}){
-        return {user}
-    }
     @Get(':id')
         getOneUser(@Param('id') id:String){
             return {
