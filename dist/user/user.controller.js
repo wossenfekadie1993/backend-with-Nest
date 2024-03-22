@@ -16,27 +16,26 @@ exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const request_mapping_decorator_1 = require("@nestjs/common/decorators/http/request-mapping.decorator");
 const createUserDto_dto_1 = require("./userDTO/createUserDto.dto");
+const updateUserDto_dto_1 = require("./userDTO/updateUserDto.dto");
+const user_service_1 = require("./user.service");
 let UserController = class UserController {
-    findAll() {
-        return [];
+    constructor(userService) {
+        this.userService = userService;
     }
-    createUser(user) {
-        return { user };
+    getUsers() {
+        return this.userService.findAll();
     }
-    getOneUser(id) {
-        return {
-            id
-        };
+    createUser(createUserDto) {
+        return this.userService.create(createUserDto);
     }
-    updateUser(id, createUserDto) {
-        return {
-            'message': `This is the updated user ${id}`
-        };
+    getUser(id) {
+        return this.userService.findOne(id);
+    }
+    updateUser(id, updateUserDto) {
+        return this.userService.update(id, updateUserDto);
     }
     deleteUser(id) {
-        return {
-            'message': `This is the deleted user ${id}`
-        };
+        return this.userService.remove(id);
     }
 };
 exports.UserController = UserController;
@@ -45,12 +44,12 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], UserController.prototype, "findAll", null);
+], UserController.prototype, "getUsers", null);
 __decorate([
     (0, request_mapping_decorator_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [createUserDto_dto_1.UserDto]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "createUser", null);
 __decorate([
@@ -59,13 +58,13 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], UserController.prototype, "getOneUser", null);
+], UserController.prototype, "getUser", null);
 __decorate([
     (0, request_mapping_decorator_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, createUserDto_dto_1.UserDto]),
+    __metadata("design:paramtypes", [String, updateUserDto_dto_1.UpdateUserDto]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "updateUser", null);
 __decorate([
@@ -76,6 +75,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "deleteUser", null);
 exports.UserController = UserController = __decorate([
-    (0, common_1.Controller)('user')
+    (0, common_1.Controller)('user'),
+    __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserController);
 //# sourceMappingURL=user.controller.js.map
