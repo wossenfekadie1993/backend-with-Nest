@@ -1,10 +1,10 @@
-import { Controller, HttpCode, Param, Req,Body, Header, Redirect, Query, ConflictException, NotFoundException } from '@nestjs/common';
+import { Controller, HttpCode, Param, Req,Body, Header, Redirect, Query } from '@nestjs/common';
 import { Delete, Get, Patch, Post } from '@nestjs/common/decorators/http/request-mapping.decorator';
 import { UserDto } from './userDTO/createUserDto.dto';
 import { UpdateUserDto } from './userDTO/updateUserDto.dto';
 import { UserService } from './user.service';
-import { User } from 'src/interfaces/user.interface';
-
+// import { version } from 'os';
+// import { promises } from 'dns';
 @Controller('user')
 export class UserController {
     // @Get()
@@ -32,20 +32,15 @@ export class UserController {
     constructor(private readonly userService:UserService){}
 
     @Get()
+    @Get()
+    @Get()
     getUsers(){
         return this.userService.findAll();
     }
 
-    @Post('register')
-    async createUser(@Body() createUserDto: UserDto): Promise<User> {
-      try {
-        return await this.userService.create(createUserDto);
-      } catch (err) {
-        if (err instanceof ConflictException) {
-          throw new ConflictException(err.message);
-        }
-        throw new NotFoundException(err.message);
-      }
+    @Post()
+    createUser(@Body() createUserDto:UserDto){
+        return this.userService.create(createUserDto);
     }
     @Get(':id')
     getUser(@Param('id') id:string){

@@ -31,7 +31,7 @@ export declare class UserService {
     constructor(UserModel: Model<User>);
     create(createUserDto: UserDto): Promise<User>;
     findAll(): Promise<User[]>;
-    findOne(id: string): Promise<User>;
+    findOne(identifier: string): Promise<User>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<User>;
     remove(id: string): Promise<any>;
 }

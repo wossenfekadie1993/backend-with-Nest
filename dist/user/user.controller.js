@@ -25,8 +25,16 @@ let UserController = class UserController {
     getUsers() {
         return this.userService.findAll();
     }
-    createUser(createUserDto) {
-        return this.userService.create(createUserDto);
+    async createUser(createUserDto) {
+        try {
+            return await this.userService.create(createUserDto);
+        }
+        catch (err) {
+            if (err instanceof common_1.ConflictException) {
+                throw new common_1.ConflictException(err.message);
+            }
+            throw new common_1.NotFoundException(err.message);
+        }
     }
     getUser(id) {
         return this.userService.findOne(id);
@@ -46,11 +54,11 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getUsers", null);
 __decorate([
-    (0, request_mapping_decorator_1.Post)(),
+    (0, request_mapping_decorator_1.Post)('register'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [createUserDto_dto_1.UserDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UserController.prototype, "createUser", null);
 __decorate([
     (0, request_mapping_decorator_1.Get)(':id'),

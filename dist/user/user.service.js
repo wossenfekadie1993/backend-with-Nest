@@ -16,53 +16,78 @@ exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const constants_1 = require("../constants");
 const mongoose_1 = require("mongoose");
+const bcrypt_1 = require("bcrypt");
 let UserService = class UserService {
     constructor(UserModel) {
         this.UserModel = UserModel;
     }
     async create(createUserDto) {
         try {
-            const createdUser = new this.UserModel(createUserDto);
+            const hashedPassword = (0, bcrypt_1.hashSync)(createUserDto.password, 10);
+            const userWithHashedPassword = {
+                ...createUserDto,
+                password: hashedPassword,
+            };
+            const createdUser = new this.UserModel(userWithHashedPassword);
             return createdUser.save();
         }
         catch (err) {
             if (err.code === 11000) {
-                throw new common_1.ConflictException('email already exist');
+                throw new common_1.ConflictException('Email already exists');
             }
-            throw new Error('failed to create user');
+            throw new Error('Failed to create user');
         }
     }
     async findAll() {
         try {
             const Users = await this.UserModel.find().exec();
-            if (!Users || Users.length === 0)
-                throw new common_1.NotFoundException("No users found");
+            if (!Users || Users.length === 0) {
+                throw new common_1.NotFoundException('No users found');
+            }
             return Users;
         }
         catch (err) {
             throw err;
         }
     }
-    async findOne(id) {
-        const user = await this.UserModel.findById(id).exec();
-        if (!user) {
-            throw new common_1.NotFoundException(`User with ID "${id}" not found.`);
+    async findOne(identifier) {
+        try {
+            const isObjectId = mongoose_1.default.Types.ObjectId.isValid(identifier);
+            const user = await (isObjectId
+                ? this.UserModel.findById(identifier).exec()
+                : this.UserModel.findOne({ email: identifier }).exec());
+            if (!user) {
+                throw new common_1.NotFoundException(`User with ID or email "${identifier}" not found.`);
+            }
+            return user;
         }
-        return this.UserModel.findById(id).exec();
+        catch (err) {
+            throw err;
+        }
     }
     async update(id, updateUserDto) {
-        const updatedUser = await this.UserModel.findByIdAndUpdate(id, updateUserDto, { new: true }).exec();
-        if (!updatedUser) {
-            throw new common_1.NotFoundException(`User with ID ${id} not found`);
+        try {
+            const updatedUser = await this.UserModel.findByIdAndUpdate(id, updateUserDto, { new: true }).exec();
+            if (!updatedUser) {
+                throw new common_1.NotFoundException(`User with ID ${id} not found`);
+            }
+            return updatedUser;
         }
-        return updatedUser;
+        catch (err) {
+            throw err;
+        }
     }
     async remove(id) {
-        const result = await this.UserModel.deleteOne({ _id: id }).exec();
-        if (result.deletedCount === 0) {
-            throw new common_1.NotFoundException(`User with ID ${id} not found`);
+        try {
+            const result = await this.UserModel.deleteOne({ _id: id }).exec();
+            if (result.deletedCount === 0) {
+                throw new common_1.NotFoundException(`User with ID ${id} not found`);
+            }
+            return `User with ID ${id} deleted successfully`;
         }
-        return `User with ID ${id} deleted successfully`;
+        catch (err) {
+            throw err;
+        }
     }
 };
 exports.UserService = UserService;

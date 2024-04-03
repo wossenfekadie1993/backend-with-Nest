@@ -20,20 +20,20 @@ let AuthService = class AuthService {
         this.userService = userService;
     }
     async signIn(email, password) {
-        if (!email || !password) {
-            throw new common_1.UnauthorizedException('Please provide both email and password');
-        }
-        const user = await this.userService.findOne(email);
-        if (!user || !(0, bcrypt_1.compareSync)(password, user.password)) {
-            throw new common_1.UnauthorizedException('Invalid email or password');
-        }
-        const payload = { sub: user.id, username: user.email };
         try {
+            if (!email || !password) {
+                throw new common_1.UnauthorizedException('Invalid credentials');
+            }
+            const user = await this.userService.findOne(email);
+            if (!user || !(0, bcrypt_1.compareSync)(password, user.password)) {
+                throw new common_1.UnauthorizedException('Invalid credentials');
+            }
+            const payload = { sub: user.id, username: user.email };
             const access_token = await this.jwtService.signAsync(payload);
             return { access_token };
         }
         catch (error) {
-            throw new common_1.UnauthorizedException('Unable to sign the JWT token');
+            throw new common_1.UnauthorizedException('Unable to sign in');
         }
     }
 };

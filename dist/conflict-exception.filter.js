@@ -6,12 +6,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppService = void 0;
+exports.ConflictExceptionFilter = void 0;
 const common_1 = require("@nestjs/common");
-let AppService = class AppService {
+let ConflictExceptionFilter = class ConflictExceptionFilter {
+    catch(exception, host) {
+        const ctx = host.switchToHttp();
+        const response = ctx.getResponse();
+        response.status(common_1.HttpStatus.CONFLICT).json({
+            statusCode: common_1.HttpStatus.CONFLICT,
+            message: exception.message,
+        });
+    }
 };
-exports.AppService = AppService;
-exports.AppService = AppService = __decorate([
-    (0, common_1.Injectable)()
-], AppService);
-//# sourceMappingURL=app.service.js.map
+exports.ConflictExceptionFilter = ConflictExceptionFilter;
+exports.ConflictExceptionFilter = ConflictExceptionFilter = __decorate([
+    (0, common_1.Catch)(common_1.ConflictException)
+], ConflictExceptionFilter);
+//# sourceMappingURL=conflict-exception.filter.js.map
